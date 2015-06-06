@@ -18,8 +18,8 @@
 	<script type="text/javascript">
 	$(document).ready(function() 
     	{ 
-      	  $(".tablesorter").tablesorter(); 
-   	 } 
+      	  $(".tablesorter").tablesorter();
+   	 }
 	);
 	$(document).ready(function() {
 
@@ -310,7 +310,63 @@ var data = {
     var ctx = document.getElementById("myChart").getContext("2d");
     var myLineChart = new Chart(ctx).Line(data  );
     Chart.defaults.global.responsive = true;
-    alert({{test}});
+
+function get_rehab_data(){
+   $.ajax({
+            url: '/get_rehab_d',
+
+            type: 'GET',
+            success: function(rehab_data) {
+                alert(rehab_data.fighter1[0]);
+                li =[rehab_data.fighter1];
+
+                $.each(rehab_data, function(key, value){
+                    console.log(key + "  : " + value);
+                    //options += '<option value="' + key + '">' + value + '</option>';
+                });
+
+            },
+            error: function(error) {
+                console.log(error);
+            }}
+            );
+    }
+    setInterval(get_temperature_data, 5000);
+
+    function get_temperature_data(){
+    alert("here");
+    $.ajax({
+            url: '/get_temperature_updates',
+
+            type: 'GET',
+            success: function(temp_data) {
+
+                $.each(temp_data, function(key, value){
+                    console.log(key + "  : " + value);
+                    //options += '<option value="' + key + '">' + value + '</option>';
+                });
+
+            },
+            error: function(error) {
+                console.log(error);
+            }}
+    );
+    }
+ /*
+            $.ajax({
+            url: '/get_temperature_updates',
+
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }}
+            );
+
+*/
+   // $.post("/get_rehab_data" , {fighter_name:"hey"});
 </script>
 
 </body>
