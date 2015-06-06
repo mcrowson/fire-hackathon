@@ -1,17 +1,26 @@
-from flask import Flask
+__author__ = 'antoinepatton'
+
+from flask import Flask, request, session, render_template
 from flask.ext.restless import APIManager
 from flask.ext.sqlalchemy import SQLAlchemy
- 
+from api.app import app as api_app
+from werkzeug.serving import run_simple
+
 app = Flask(__name__)
+app.config.from_object(__name__)
 
-@app.route('/api/')
+@app.route('/')
 def index():
-    return "Hello Hackathon"
+    #events = api.call(get_event, arg0, arg1)
+    data = dict()
+    data['test'] = "whew who"
+    data['matthew'] = None
+    return render_template('index.html', data=data)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///firefighters.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///api/firefighters.db'
 db = SQLAlchemy(app)
- 
+
 class Firefighter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.Text)
@@ -62,7 +71,5 @@ api_manager.create_api(MeasurementObject, methods=['GET', 'POST', 'DELETE', 'PUT
 api_manager.create_api(Type, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Reading, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run()
