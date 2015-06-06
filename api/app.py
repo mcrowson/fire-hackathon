@@ -60,6 +60,7 @@ api_manager.create_api(Firefighter, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Sensor, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(MeasurementObject, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Type, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Reading, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 
