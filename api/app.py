@@ -65,4 +65,4 @@ api_manager.create_api(Reading, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5001)
