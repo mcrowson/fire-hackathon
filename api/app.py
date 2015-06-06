@@ -11,7 +11,7 @@ class Firefighter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.Text)
     last_name = db.Column(db.Text)
-    dob = db.Column(db.Date)
+    dob = db.Column(db.Text)
     baseline_resting_heartrate = db.Column(db.Integer)
     baseline_active_heartrate = db.Column(db.Integer)
     height = db.Column(db.Integer)
@@ -30,12 +30,12 @@ class MeasurementObject(db.Model):
     normal_reading = db.Column(db.Integer)
     max_threshold = db.Column(db.Integer)
     min_threshold = db.Column(db.Integer)
-    type = db.Column(db.ForeignKey("type.id"), nullable=False)
+    type = db.Column(db.Integer)  # FK to Type
 
 
 class Sensor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    measurement = db.Column(db.ForeignKey("measurementobject.id"), nullable=False)
+    measurement = db.Column(db.Integer)  # FK to Measurement Object
     name = db.Column(db.Text)
     description = db.Column(db.Text)
 
