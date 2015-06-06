@@ -11,12 +11,33 @@ class Firefighter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.Text)
     last_name = db.Column(db.Text)
+    dob = db.Column(db.Date)
+    baseline_resting_heartrate = db.Column(db.Integer)
+    baseline_active_heartrate = db.Column(db.Integer)
+    height = db.Column(db.Integer)
+    weight = db.Column(db.Integer)
+
+
+class Type(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+
 
 class MeasurementObject(db.Model):
-    pass
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    description = db.Column(db.Text)
+    normal_reading = db.Column(db.Integer)
+    max_threshold = db.Column(db.Integer)
+    min_threshold = db.Column(db.Integer)
+    type = db.Column(db.ForeignKey("type.id"), nullable=False)
+
 
 class Sensor(db.Model):
-    pass
+    id = db.Column(db.Integer, primary_key=True)
+    measurement = db.Column(db.ForeignKey("measurementobject.id"), nullable=False)
+    name = db.Column(db.Text)
+    description = db.Column(db.Text)
 
 db.create_all()
  
