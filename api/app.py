@@ -3,7 +3,12 @@ from flask.ext.restless import APIManager
 from flask.ext.sqlalchemy import SQLAlchemy
  
 app = Flask(__name__)
- 
+
+@app.route('/api/')
+def index():
+    return "Hello Hackathon"
+
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///firefighters.db'
 db = SQLAlchemy(app)
  
@@ -39,10 +44,24 @@ class Sensor(db.Model):
     name = db.Column(db.Text)
     description = db.Column(db.Text)
 
+
+class Reading(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sensor = db.Column(db.Integer)  # FK to Sensor
+    firefighter = db.Column(db.Integer)  # FK to Firefighter
+    measurement_object = db.Column(db.Integer)   # FK to Measurement Object
+    value = db.Column(db.Integer)  # The value being read
+    timestamp = db.Column(db.Text)  # The timestamp of the reading
+
 db.create_all()
- 
+
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
 api_manager.create_api(Firefighter, methods=['GET', 'POST', 'DELETE', 'PUT'])
- 
+api_manager.create_api(Sensor, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(MeasurementObject, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Type, methods=['GET', 'POST', 'DELETE', 'PUT'])
+
+
+
 if __name__ == "__main__":
     app.run()
