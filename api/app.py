@@ -19,7 +19,6 @@ class Sensor(db.Model):
     pass
 
 db.create_all()
-
  
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
 api_manager.create_api(Firefighter, methods=['GET', 'POST', 'DELETE', 'PUT'])
