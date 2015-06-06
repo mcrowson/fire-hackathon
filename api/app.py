@@ -65,4 +65,4 @@ api_manager.create_api(Reading, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 if __name__ == "__main__":
-    app.run(port=5001)
+    app.run(port=5001, use_reloader=True)
