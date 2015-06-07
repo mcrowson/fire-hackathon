@@ -41,12 +41,15 @@ def index():
     data['matthew'] = None
     return render_template('index.html', data=data)
 
-# @app.route('/get_firefighter_stats',  methods=['GET'])
-# def firefighter_stats():
-#     data = dict()
-#     data['firefighters'] = requests.get('http://127.0.0.1:5001/api/firefighter').json()['objects']
-#     for firefighter in data['firefighters']:
-#        logger.debug(firefighter)
+@app.route('/get_firefighter_stats',  methods=['GET'])
+def firefighter_stats():
+    data = dict()
+    data['firefighters'] = requests.get('http://127.0.0.1:5001/api/firefighter').json()['objects']
+    for ff in data['firefighters']:
+        #logger.debug(firefighter)
+        firefighter_id = str(ff['id'])
+        data['statistics'] = requests.get('http://localhost:5001/api/reading?q={%22filters%22:[{%22name%22:%22firefighter%22,%22op%22:%22eq%22,%22val%22:1},{%22name%22:%22measurement_object%22,%22op%22:%22eq%22,%22val%22:2}],%22order_by%22:[{%22field%22:%22id%22,%22direction%22:%22desc%22}]}')
+        data['']
 
 @app.route('/get_temperature',  methods=['GET'])
 def temperature_updates():
