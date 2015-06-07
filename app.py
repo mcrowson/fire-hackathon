@@ -12,8 +12,6 @@ sh = logging.StreamHandler()
 logger.addHandler(sh)
 logger.setLevel(logging.DEBUG)
 
-from werkzeug.wsgi import DispatcherMiddleware
-
 app = Flask(__name__)
 app.config.from_object(__name__)
 
@@ -30,4 +28,5 @@ def index():
     return render_template('index.html', data=data)
 
 if __name__ == '__main__':
+    app.debug = True
     app.run(port=5000, use_reloader=True)
