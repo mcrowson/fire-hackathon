@@ -41,14 +41,14 @@ def index():
     data['matthew'] = None
     return render_template('index.html', data=data)
 
-@app.route('/get_firefighter_stats',  methods=['GET'])
-def firefighter_stats():
-    data = dict()
-    data['firefighters'] = requests.get('http://127.0.0.1:5001/api/firefighter').json()['objects']
-    for firefighter in data['firefighters']:
-       logger.debug(firefighter)
+# @app.route('/get_firefighter_stats',  methods=['GET'])
+# def firefighter_stats():
+#     data = dict()
+#     data['firefighters'] = requests.get('http://127.0.0.1:5001/api/firefighter').json()['objects']
+#     for firefighter in data['firefighters']:
+#        logger.debug(firefighter)
 
-@app.route('/get_temperature_updates',  methods=['GET'])
+@app.route('/get_temperature',  methods=['GET'])
 def temperature_updates():
     try:
         data = dict()
@@ -65,10 +65,9 @@ def temperature_updates():
             temp_list.reverse()
             firefighter_temp = []
             i = 0
-            while len(firefighter_temp) <6:
+            while len(firefighter_temp) < 6:
                 firefighter_temp.append(temp_list[i])
                 i +=1
-            firefighter_temp.reverse()
             ff_final_data[count] = firefighter_temp
             count +=1
         logger.debug(ff_final_data)
@@ -95,9 +94,6 @@ def messages_updates():
 @app.route('/get_talia_analytics',  methods=['GET'])
 def talia_analytics():
     pass
-
-
-
 
 if __name__ == '__main__':
     app.debug = True
