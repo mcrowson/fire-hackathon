@@ -10,9 +10,10 @@ import requests
 import json
 import datetime
 import time
+import sys
 
 
-def main():
+def main(fire_fighter_id, sensor_id):
     """
     The main the function
     :return:
@@ -26,8 +27,8 @@ def main():
             time_stamp = datetime.datetime.now()
             headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
             print temp
-            data_dict = {"sensor": 1,
-                    "firefighter": 1,
+            data_dict = {"sensor": sensor_id,
+                    "firefighter": fire_fighter_id,
                     "measurement_object": 1,
                     "value": temp,
                     "timestamp": str(time_stamp)}
@@ -39,4 +40,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 3:
+        main(int(sys.argv[1]), int(sys.argv[2]))
+    else:
+        print "Usage: HeatTest <fire_fighter_id> <sensor_id>"
