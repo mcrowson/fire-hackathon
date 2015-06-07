@@ -86,7 +86,7 @@ def temperature_updates():
         ff_final_data = dict()
         count = 0
         for ff in data['firefighters']:
-            #logger.debug(ff['id'])
+            logger.debug(ff['id'])
             fire_fighter_id = str(ff['id'])
             data['temperatures'] = requests.get('http://127.0.0.1:5001/api/reading?q={"filters":[{"name":"firefighter","op":"eq","val":"'+fire_fighter_id+'"},{"name":"measurement_object","op":"eq","val":1}]}').json()['objects']
             for temperature_obj in data['temperatures']:
@@ -126,4 +126,4 @@ def talia_analytics():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='0.0.0.0', port=5000, use_reloader=True)
+    app.run(host='0.0.0.0', port=80, use_reloader=True)

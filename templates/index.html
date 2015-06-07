@@ -59,7 +59,7 @@
 			<h2 class="section_title">Dashboard</h2><div class="btn_view_site"></div>
 		</hgroup>
 	</header> <!-- end of header bar -->
-	{{ data.test }}
+
 	<section id="secondary_bar">
 		<div class="user">
 			<p>Fort Myers Department District #3 (<a href="#">7 Notifications</a>)</p>
@@ -344,7 +344,7 @@
                             firefighter = value[i];
                             var firefighter_oxygen = firefighter.value;
                             // console.log(key + "  : " + firefighter_oxygen);
-                            oxygen_list[i] = firefighter_oxygen;
+                            oxygen_list[i] = firefighter_oxygen-30;
                             fighter_element_list[key].innerHTML = firefighter_oxygen +" %"
                         }
                 });
@@ -391,10 +391,10 @@
 
                         for(var i=0; i < value.length; i++){
                             firefighter_one = value[i];
-                            var fire_temperature = firefighter_one.value;
+                            var fire_temperature = parseInt(firefighter_one.value);
                             //console.log(key + "  : " + fire_temperature);
-                            temp_list[i] = fire_temperature + (test*2);
-                            test+=1;
+                            temp_list[i] = fire_temperature;
+                            //test+=1;
                         }
                         fighter_element_list[key].innerHTML = temp_list[temp_list.length-1] +" (f)"
                         individual_data_set = {
@@ -420,6 +420,10 @@
                         var myLineChart = new Chart(ctx).Line(data  );
                         Chart.defaults.global.responsive = true;
                         Chart.defaults.global.animation = false;
+                        Chart.defaults.global.scaleStartValue = 50;
+                        Chart.defaults.global.scaleSteps = 10;
+                        Chart.defaults.global.scaleStepWidth = 10;
+                        Chart.defaults.global.scaleOverride = true;
                }, error: function(error) {
                     console.log(error);
                 }
