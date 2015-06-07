@@ -59,10 +59,11 @@ def temperature_updates():
         for ff in data['firefighters']:
             logger.debug(ff['id'])
             fire_fighter_id = str(ff['id'])
-            data['temperatures'] = requests.get('http://127.0.0.1:5001/api/reading?q={"filters":[{"name":"firefighter","op":"eq","val":"'+fire_fighter_id+'"}]}').json()['objects']
+            data['temperatures'] = requests.get('http://127.0.0.1:5001/api/reading?q={"filters":[{"name":"firefighter","op":"eq","val":"'+fire_fighter_id+'"},{"name":"measurement_object","op":"eq","val":1}]}').json()['objects']
             for temperature_obj in data['temperatures']:
+                #logger.info(temperature_obj['value'])
                 temp_list.append(temperature_obj)
-            temp_list.reverse()
+            #temp_list.reverse()
             firefighter_temp = []
             i = 0
             while len(firefighter_temp) < 6:

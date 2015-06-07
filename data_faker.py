@@ -18,6 +18,11 @@ def tank_remaining(x):
         readings.append(next)
     return readings
 
+faked_measurements0 = {
+
+    'temperature': [int(random.gauss(230, 30)) for x in range(35)],
+}
+
 faked_measurements1 = {
     'oxygen_in_tank': tank_remaining(0.6),
     'heart_rate': [int(random.gauss(110, 8)) for x in range(35)],
@@ -33,6 +38,16 @@ headers = {'content-type': 'application/json'}
 cont = True
 while cont:
     for i in range(35):
+
+        data = {'value': faked_measurements0['temperature'][i],
+                'firefighter': 1,
+                'sensor': 2,
+                'measurement_object': 1,
+                'timestamp': time.strftime('%m/%d/%Y %H:%M:%S')
+                }
+
+        requests.post(url, headers=headers, data=json.dumps(data))
+
         data = {'value': faked_measurements1['oxygen_in_tank'][i],
                 'firefighter': 1,
                 'sensor': 3,
@@ -49,6 +64,14 @@ while cont:
                 'timestamp': time.strftime('%m/%d/%Y %H:%M:%S')
                 }
 
+        requests.post(url, headers=headers, data=json.dumps(data))
+
+        data = {'value': faked_measurements0['temperature'][i],
+                'firefighter': 2,
+                'sensor': 2,
+                'measurement_object': 1,
+                'timestamp': time.strftime('%m/%d/%Y %H:%M:%S')
+                }
         requests.post(url, headers=headers, data=json.dumps(data))
 
         data = {'value': faked_measurements2['oxygen_in_tank'][i],
