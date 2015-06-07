@@ -270,7 +270,24 @@
 		<div class="spacer"></div>
 	</section>
 <script>
+
+     function get_temperature_data(){
+
+        $.ajax({
+
+            url: '/get_firefighter_stats',
+
+            type: 'GET',
+            success: function(firefighter_stats) {
+
+                }
+        });
+
+
+
     setInterval(get_temperature_data, 3000);
+
+    colors = {0:'#1CBEBE', 1:'#6B54D3',2:'#ADACAC'}
     function get_temperature_data(){
 
         $.ajax({
@@ -280,7 +297,7 @@
                 type: 'GET',
                 success: function(temp_data) {
                     //alert(temp_data);
-                    colors = {0:'#19CA14', 1:'#6B54D3',2:'#ADACAC'}
+
                     data_set = [];
                     $.each(temp_data, function(key, value){
                         var temp_list = [];
