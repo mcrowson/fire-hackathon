@@ -82,8 +82,7 @@
 			<div class="module_content">
 				<article class="stats_graph">
 
-                    <canvas id="myChart" width="500" height="400"></canvas>
-                    <!--<img src="http://chart.apis.google.com/chart?chxr=0,0,3000&chxt=y&chs=520x140&cht=lc&chco=76A4FB,80C65A&chd=s:Tdjpsvyvttmiihgmnrst,OTbdcfhhggcTUTTUadfk&chls=2|2&chma=40,20,20,30" width="520" height="140" alt="" />-->
+                    <canvas id="myChart" width="800" height="400"></canvas>
 				</article>
 				
 				<article class="stats_overview" style="margin-bottom:30px;background-color:#19CA14;">
@@ -317,7 +316,7 @@ function get_rehab_data(){
 
             type: 'GET',
             success: function(rehab_data) {
-                alert(rehab_data.fighter1[0]);
+               // alert(rehab_data.fighter1[0]);
                 li =[rehab_data.fighter1];
 
                 $.each(rehab_data, function(key, value){
@@ -331,16 +330,16 @@ function get_rehab_data(){
             }}
             );
     }
-    setInterval(get_temperature_data, 5000);
-
+    //setInterval(get_temperature_data, 5000);
+    get_temperature_data();
     function get_temperature_data(){
-    alert("here");
+
     $.ajax({
             url: '/get_temperature_updates',
 
             type: 'GET',
             success: function(temp_data) {
-
+                alert(temp_data);
                 $.each(temp_data, function(key, value){
                     console.log(key + "  : " + value);
                     //options += '<option value="' + key + '">' + value + '</option>';
