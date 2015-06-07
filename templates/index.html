@@ -270,102 +270,56 @@
 		<div class="spacer"></div>
 	</section>
 <script>
-
-var data = {
-    labels: ["60 secs", "50 secs", "50 secs", "40 secs", "30 secs", "20 secs", "10 secs"],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: "transparent",
-            strokeColor: "#19CA14",
-            pointColor: "#19CA14",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40]
-        },
-        {
-            label: "My Second dataset",
-            fillColor: "transparent",
-            strokeColor: "#6B54D3",
-            pointColor: "#6B54D3",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 86, 27, 90]
-        },
-        {
-            label: "My Second dataset",
-            fillColor: "transparent",
-            strokeColor: "#ADACAC",
-            pointColor: "#ADACAC",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [8, 28, 20, 9, 36, 17, 80]
-        }
-    ]
-};
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var myLineChart = new Chart(ctx).Line(data  );
-    Chart.defaults.global.responsive = true;
-
-function get_rehab_data(){
-   $.ajax({
-            url: '/get_rehab_d',
-
-            type: 'GET',
-            success: function(rehab_data) {
-                // alert(rehab_data.fighter1[0]);
-                li =[rehab_data.fighter1];
-
-                $.each(rehab_data, function(key, value){
-                    console.log(key + "  : " + value);
-                    //options += '<option value="' + key + '">' + value + '</option>';
-                });
-
-            },
-            error: function(error) {
-                console.log(error);
-            }}
-            );
-    }
-    //setInterval(get_temperature_data, 5000);
-    get_temperature_data();
+    setInterval(get_temperature_data, 3000);
     function get_temperature_data(){
 
-    $.ajax({
-            url: '/get_temperature_updates',
+        $.ajax({
 
-            type: 'GET',
-            success: function(temp_data) {
-                alert(temp_data);
-                $.each(temp_data, function(key, value){
-                    console.log(key + "  : " + value);
-                    //options += '<option value="' + key + '">' + value + '</option>';
+                url: '/get_temperature',
+
+                type: 'GET',
+                success: function(temp_data) {
+                    //alert(temp_data);
+                    colors = {0:'#19CA14', 1:'#6B54D3',2:'#ADACAC'}
+                    data_set = [];
+                    $.each(temp_data, function(key, value){
+                        var temp_list = [];
+                        for(var i=0; i < value.length; i++){
+                            firefighter_one = value[i];
+                            var fire_temperature = firefighter_one.value;
+                            console.log(key + "  : " + fire_temperature);
+                            temp_list[i] = fire_temperature;
+                        }
+
+                        individual_data_set = {
+                                label: "individual_data_set",
+                                fillColor: "transparent",
+                                strokeColor: colors[key],
+                                pointColor: colors[key],
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                data: temp_list
+                        }
+                        data_set.push(individual_data_set);
+
+                    });
+
+                     var data = {
+                        labels: ["60 secs", "50 secs", "50 secs", "40 secs", "30 secs", "20 secs", "10 secs"],
+                        datasets : data_set,
+                    }
+                   var ctx = document.getElementById("myChart").getContext("2d");
+                        var myLineChart = new Chart(ctx).Line(data  );
+                        Chart.defaults.global.responsive = true;
+               }, error: function(error) {
+                    console.log(error);
+                }
+
                 });
 
-            },
-            error: function(error) {
-                console.log(error);
-            }}
-    );
-    }
- /*
-            $.ajax({
-            url: '/get_temperature_updates',
 
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }}
-            );
-
-*/
-   // $.post("/get_rehab_data" , {fighter_name:"hey"});
+}
 </script>
 
 </body>
