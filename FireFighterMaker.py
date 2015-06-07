@@ -26,5 +26,5 @@ data_dict = {"first_name": "james",
 response = requests.post("http://localhost:5001/api/firefighter", data=json.dumps(data_dict), headers=headers)
 print(response.json())
 
-'http://localhost:5001/api/reading?q={"filters":[{"name":"firefighter","op":"eq","val":1},{"name":"measurement_object","op":"eq","val":1}],"order_by":[{"field":"id","direction":"desc"}]}' \
-'q={"filters":[{"name":"firefighter","op":"eq","val":2}]}'
+#'http://localhost:5001/api/reading?q={"filters":[{"name":"firefighter","op":"eq","val":1},{"name":"measurement_object","op":"eq","val":1}],"order_by":[{"field":"id","direction":"desc"}]}' \
+#'q={"filters":[{"name":"firefighter","op":"eq","val":2}]}'

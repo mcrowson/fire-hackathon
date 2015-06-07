@@ -59,7 +59,7 @@ def temperature_updates():
         for ff in data['firefighters']:
             logger.debug(ff['id'])
             fire_fighter_id = str(ff['id'])
-            data['temperatures'] = requests.get('http://127.0.0.1:5001/api/reading?q={"filters":[{"name":"firefighter","op":"eq","val":"'+fire_fighter_id+'"}]}').json()['objects']
+            data['temperatures'] = requests.get('http://127.0.0.1:5001/api/reading?q={"filters":[{"name":"firefighter","op":"eq","val":"'+fire_fighter_id+'"},{"name":"measurement_object","op":"eq","val":1}]}').json()['objects']
             for temperature_obj in data['temperatures']:
                 temp_list.append(temperature_obj)
             temp_list.reverse()
@@ -67,12 +67,12 @@ def temperature_updates():
             i = 0
             while len(firefighter_temp) < 6:
                 firefighter_temp.append(temp_list[i])
-                i +=1
+                i += 1
+            firefighter_temp.reverse()
             ff_final_data[count] = firefighter_temp
-            count +=1
+            count += 1
         logger.debug(ff_final_data)
         return flask.jsonify(ff_final_data)
-        #return render_template('index.html', data=ff_final_data)
     except Exception as inst:
         logger.debug(inst)
 
