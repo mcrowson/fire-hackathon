@@ -28,6 +28,20 @@ def tank_remaining(x):
     return readings
 
 
+<<<<<<< HEAD
+=======
+faked_measurements1 = {
+    'oxygen_in_tank': tank_remaining(0.6),
+    'heart_rate': [int(random.gauss(110, 8)) for x in range(35)],
+}
+
+faked_measurements2 = {
+    'oxygen_in_tank': tank_remaining(0.4),
+    'heart_rate': [int(random.gauss(120, 12)) for x in range(35)],
+}
+
+
+>>>>>>> development_antoine
 def main(url, fire_fighter_id, heat_sensor_id):
     """
 
@@ -39,12 +53,15 @@ def main(url, fire_fighter_id, heat_sensor_id):
     heat_sensor = Sensors.HeatSensor()
 
     while True:
+<<<<<<< HEAD
 
         faked_measurements1 = {
             'oxygen_in_tank': tank_remaining(0.6),
             'heart_rate': [int(random.gauss(110, 8)) for x in range(35)],
         }
 
+=======
+>>>>>>> development_antoine
         for i in range(35):
 
             if not heat_sensor.device_exists():

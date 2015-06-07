@@ -75,7 +75,7 @@
 <br><br>
 	<section id="main" class="column">
 		
-		<h4 class="alert_info">Temperature Increasing!</h4>
+		<h4 class="alert_info">Pay attention to rapid temperature changes</h4>
 		
 		<article class="module width_full">
 			<header><h3>Temperature Stats</h3></header>
@@ -85,19 +85,19 @@
                     <canvas id="myChart" width="800" height="400"></canvas>
 				</article>
 				
-				<article class="stats_overview" style="margin-bottom:30px;background-color:#19CA14;">
+				<article class="stats_overview" style="margin-bottom:30px;background-color:#1CBEBE;">
 					<div class="overview_today">
 						<p class="overview_day">Matt</p>
-						<p class="overview_count vitals">1,876</p>
+						<p class="overview_count vitals" id="fighter_one_vitals">1,876</p>
 						<p class="overview_type">Vitals</p>
-						<p class="overview_count air">2,103</p>
+						<p class="overview_count air" id="fighter_one_oxygen">2,103</p>
 						<p class="overview_type">Air</p>
 					</div>
 					<div class="overview_previous">
 						<p class="overview_day location"> Alpha</p>
-						<p class="overview_count temp">1,646</p>
+						<p class="overview_count time_display">1,646</p>
 						<p class="overview_type">Time</p>
-						<p class="overview_count time">2,054</p>
+						<p class="overview_count temp" id="fighter_one_temp">2,054</p>
 						<p class="overview_type">Temp </p>
 					</div>
 
@@ -105,39 +105,39 @@
 
                <article class="stats_overview" style="margin-bottom:30px; background-color:#6B54D3; color:white;">
 					<div class="overview_today">
-						<p class="overview_day">Josh</p>
-						<p class="overview_count vitals">1,876</p>
-						<p class="overview_type">Vitals</p>
-						<p class="overview_count air">2,103</p>
+						<p class="overview_day">Antoine</p>
+						<p class="overview_count vitals"  id="fighter_two_vitals">1,876</p>
+						<p class="overview_type ">Vitals</p>
+						<p class="overview_count air" id="fighter_two_oxygen">2,103</p>
 						<p class="overview_type">Air</p>
 					</div>
 					<div class="overview_previous">
 						<p class="overview_day location"> Bravo</p>
-						<p class="overview_count temp">1,646</p>
+						<p class="overview_count time_display">1,646</p>
 						<p class="overview_type">Time</p>
-						<p class="overview_count time">2,054</p>
+						<p class="overview_count temp" id="fighter_two_temp">2,054</p>
 						<p class="overview_type">Temp </p>
 					</div>
 
 					</article>
 
-        <article class="stats_overview" style="margin-bottom:30px;background-color:#ADACAC;">
-					<div class="overview_today">
-						<p class="overview_day">Antoine</p>
-						<p class="overview_count vitals">1,876</p>
-						<p class="overview_type">Vitals</p>
-						<p class="overview_count air">2,103</p>
-						<p class="overview_type">Air</p>
-					</div>
-					<div class="overview_previous">
-						<p class="overview_day location"> Charlie</p>
-						<p class="overview_count temp">1,646</p>
-						<p class="overview_type">Time</p>
-						<p class="overview_count time">2,054</p>
-						<p class="overview_type">Temp </p>
-					</div>
+        <!--<article class="stats_overview" style="margin-bottom:30px;background-color:#ADACAC;">-->
+					<!--<div class="overview_today">-->
+						<!--<p class="overview_day">Antoine</p>-->
+						<!--<p class="overview_count vitals">1,876</p>-->
+						<!--<p class="overview_type">Vitals</p>-->
+						<!--<p class="overview_count air">2,103</p>-->
+						<!--<p class="overview_type">Air</p>-->
+					<!--</div>-->
+					<!--<div class="overview_previous">-->
+						<!--<p class="overview_day location"> Charlie</p>-->
+						<!--<p class="overview_count temp">1,646</p>-->
+						<!--<p class="overview_type">Time</p>-->
+						<!--<p class="overview_count time">2,054</p>-->
+						<!--<p class="overview_type">Temp </p>-->
+					<!--</div>-->
 
-	</article>
+	<!--</article>-->
 
 				<div class="clear"></div>
 			</div>
@@ -148,7 +148,7 @@
 		<header><h3 class="tabs_involved">Rehab Manager</h3>
 		<ul class="tabs">
    			<li><a href="#tab1">Current</a></li>
-    		<li><a href="#tab2">Talia Analytics</a></li>
+    		<li><a href="#tab2"> Analytics</a></li>
 		</ul>
 		</header>
 
@@ -271,7 +271,30 @@
 	</section>
 <script>
 
-     function get_temperature_data(){
+    setInterval(changeAlert, 6000);
+    var count_alerts = 0;
+    function changeAlert(){
+    if(count_alerts % 2 == 0){
+                     $('.alert_info').fadeOut(100);
+                    $('.alert_info').html('Temperature Affect');
+                    $('.alert_info').css({'backgroundColor':'red'});
+                    $('.alert_info').fadeIn(1000);
+    }else if (count_alerts % 3 == 0){
+        $('.alert_info').fadeOut(100);
+                    $('.alert_info').html('Watch Vitals ');
+                    $('.alert_info').css({'backgroundColor':'#E08114'});
+                    $('.alert_info').fadeIn(1000);
+    }else if (count_alerts % 5 == 0){
+                    $('.alert_info').fadeOut(100);
+                    $('.alert_info').html('Oxygen Decreasing');
+                    $('.alert_info').css({'backgroundColor':'#525CC3'});
+                    $('.alert_info').fadeIn(1000);
+    }
+    count_alerts++;
+    }
+     get_firefighter_stats();
+     setInterval(get_firefighter_stats, 10000);
+     function get_firefighter_stats(){
 
         $.ajax({
 
@@ -280,12 +303,70 @@
             type: 'GET',
             success: function(firefighter_stats) {
 
+                    ele = document.getElementById("fighter_one_vitals");
+                    ele2 = document.getElementById("fighter_two_vitals");
+                    fighter_element_list = [ele,ele2]
+                    $.each(firefighter_stats, function(key, value){
+                        var vitals_list = [];
+                        for(var i=0; i < value.length; i++){
+                            firefighter = value[i];
+                            var firefighter_vitals = firefighter.value;
+                            console.log(key + "  : " + firefighter_vitals);
+                            vitals_list[i] = firefighter_vitals;
+                            fighter_element_list[key].innerHTML = firefighter_vitals +" BMP"
+                        }
+                });
+            }, error: function(error) {
+                    console.log(error);
                 }
         });
 
+}
+    get_firefighter_oxygen()
+    setInterval(get_firefighter_oxygen, 11000);
+     function get_firefighter_oxygen(){
 
+        $.ajax({
 
-    setInterval(get_temperature_data, 3000);
+            url: '/get_firefighter_oxygen',
+
+            type: 'GET',
+            success: function(firefighter_stats) {
+
+                    ele = document.getElementById("fighter_one_oxygen");
+                    ele2 = document.getElementById("fighter_two_oxygen");
+                    fighter_element_list = [ele,ele2]
+                    $.each(firefighter_stats, function(key, value){
+                        var oxygen_list = [];
+                        for(var i=0; i < value.length; i++){
+                            firefighter = value[i];
+                            var firefighter_oxygen = firefighter.value;
+                            console.log(key + "  : " + firefighter_oxygen);
+                            oxygen_list[i] = firefighter_oxygen;
+                            fighter_element_list[key].innerHTML = firefighter_oxygen +" %"
+                        }
+                });
+            }, error: function(error) {
+                    console.log(error);
+                }
+        });
+
+}
+    time = 0;
+    seconds = 1000;
+    increment = 1000;
+    setInterval(increment_timer,1000);
+    function increment_timer(){
+        time +=increment;
+        var display = time / seconds;
+        if(display % 10 == 0){
+            if (display > 60){
+
+            }
+            $(".time_display").html(display +" secs");
+        }
+    }
+   setInterval(get_temperature_data, 5000);
 
     colors = {0:'#1CBEBE', 1:'#6B54D3',2:'#ADACAC'}
     function get_temperature_data(){
@@ -296,18 +377,24 @@
 
                 type: 'GET',
                 success: function(temp_data) {
-                    //alert(temp_data);
+
+                    ele = document.getElementById("fighter_one_temp");
+                    ele2 = document.getElementById("fighter_two_temp");
+                    fighter_element_list = [ele,ele2]
 
                     data_set = [];
+                      test = 0
                     $.each(temp_data, function(key, value){
                         var temp_list = [];
+
                         for(var i=0; i < value.length; i++){
                             firefighter_one = value[i];
                             var fire_temperature = firefighter_one.value;
                             console.log(key + "  : " + fire_temperature);
-                            temp_list[i] = fire_temperature;
+                            temp_list[i] = fire_temperature + (test*2);
+                            test+=1;
                         }
-
+                        fighter_element_list[key].innerHTML = fire_temperature +" (f)"
                         individual_data_set = {
                                 label: "individual_data_set",
                                 fillColor: "transparent",
