@@ -24,8 +24,7 @@ def main():
         time_stamp = datetime.datetime.now()
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         print temp
-        data_dict = {"id": 1,
-                "sensor": 1,
+        data_dict = {"sensor": 1,
                 "firefighter": 1,
                 "measurement_object": 1,
                 "value": temp,
