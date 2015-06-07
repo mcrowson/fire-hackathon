@@ -81,23 +81,25 @@
 			<header><h3>Temperature Stats</h3></header>
 			<div class="module_content">
 				<article class="stats_graph">
+                     <img src="../static/images/loader.gif" id="loader-gif"/>
+                    <canvas id="myChart" width="800" height="400">
 
-                    <canvas id="myChart" width="800" height="400"></canvas>
+                    </canvas>
 				</article>
 				
 				<article class="stats_overview" style="margin-bottom:30px;background-color:#1CBEBE;">
 					<div class="overview_today">
 						<p class="overview_day">Matt</p>
-						<p class="overview_count vitals" id="fighter_one_vitals">1,876</p>
+						<p class="overview_count vitals" id="fighter_one_vitals">...</p>
 						<p class="overview_type">Vitals</p>
-						<p class="overview_count air" id="fighter_one_oxygen">2,103</p>
+						<p class="overview_count air" id="fighter_one_oxygen">...</p>
 						<p class="overview_type">Air</p>
 					</div>
 					<div class="overview_previous">
 						<p class="overview_day location"> Alpha</p>
-						<p class="overview_count time_display">1,646</p>
+						<p class="overview_count time_display">...</p>
 						<p class="overview_type">Time</p>
-						<p class="overview_count temp" id="fighter_one_temp">2,054</p>
+						<p class="overview_count temp" id="fighter_one_temp">...</p>
 						<p class="overview_type">Temp </p>
 					</div>
 
@@ -106,16 +108,16 @@
                <article class="stats_overview" style="margin-bottom:30px; background-color:#6B54D3; color:white;">
 					<div class="overview_today">
 						<p class="overview_day">Antoine</p>
-						<p class="overview_count vitals"  id="fighter_two_vitals">1,876</p>
+						<p class="overview_count vitals"  id="fighter_two_vitals">...</p>
 						<p class="overview_type ">Vitals</p>
-						<p class="overview_count air" id="fighter_two_oxygen">2,103</p>
+						<p class="overview_count air" id="fighter_two_oxygen">...</p>
 						<p class="overview_type">Air</p>
 					</div>
 					<div class="overview_previous">
 						<p class="overview_day location"> Bravo</p>
-						<p class="overview_count time_display">1,646</p>
+						<p class="overview_count time_display">...</p>
 						<p class="overview_type">Time</p>
-						<p class="overview_count temp" id="fighter_two_temp">2,054</p>
+						<p class="overview_count temp" id="fighter_two_temp">...</p>
 						<p class="overview_type">Temp </p>
 					</div>
 
@@ -311,7 +313,7 @@
                         for(var i=0; i < value.length; i++){
                             firefighter = value[i];
                             var firefighter_vitals = firefighter.value;
-                            console.log(key + "  : " + firefighter_vitals);
+                           // console.log(key + "  : " + firefighter_vitals);
                             vitals_list[i] = firefighter_vitals;
                             fighter_element_list[key].innerHTML = firefighter_vitals +" BMP"
                         }
@@ -341,7 +343,7 @@
                         for(var i=0; i < value.length; i++){
                             firefighter = value[i];
                             var firefighter_oxygen = firefighter.value;
-                            console.log(key + "  : " + firefighter_oxygen);
+                            // console.log(key + "  : " + firefighter_oxygen);
                             oxygen_list[i] = firefighter_oxygen;
                             fighter_element_list[key].innerHTML = firefighter_oxygen +" %"
                         }
@@ -390,11 +392,11 @@
                         for(var i=0; i < value.length; i++){
                             firefighter_one = value[i];
                             var fire_temperature = firefighter_one.value;
-                            console.log(key + "  : " + fire_temperature);
+                            //console.log(key + "  : " + fire_temperature);
                             temp_list[i] = fire_temperature + (test*2);
                             test+=1;
                         }
-                        fighter_element_list[key].innerHTML = fire_temperature +" (f)"
+                        fighter_element_list[key].innerHTML = temp_list[temp_list.length-1] +" (f)"
                         individual_data_set = {
                                 label: "individual_data_set",
                                 fillColor: "transparent",
@@ -413,9 +415,11 @@
                         labels: ["60 secs", "50 secs", "50 secs", "40 secs", "30 secs", "20 secs", "10 secs"],
                         datasets : data_set,
                     }
-                   var ctx = document.getElementById("myChart").getContext("2d");
+                        $("#loader-gif").hide();
+                        var ctx = document.getElementById("myChart").getContext("2d");
                         var myLineChart = new Chart(ctx).Line(data  );
                         Chart.defaults.global.responsive = true;
+                        Chart.defaults.global.animation = false;
                }, error: function(error) {
                     console.log(error);
                 }
