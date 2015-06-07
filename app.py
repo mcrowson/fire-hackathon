@@ -72,7 +72,7 @@ def temperature_updates():
             ff_final_data[count] = firefighter_temp
             count +=1
         logger.debug(ff_final_data)
-        return render_template('index.html', data=data)
+        return render_template('index.html', data=ff_final_data)
     except Exception as inst:
         logger.debug(inst)
 
