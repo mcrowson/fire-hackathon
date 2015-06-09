@@ -1,5 +1,6 @@
-__author__ = 'matthew'
-
+'''
+Used to fake sensor readings for BPM and O2 levels. 
+'''
 import random
 import time
 import requests
